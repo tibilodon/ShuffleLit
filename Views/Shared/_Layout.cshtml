@@ -26,25 +26,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index"> users</a>
-                            </li>
-                        }
-                    @*     <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Club" asp-action="Index">Club</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Race" asp-action="Index">Race</a>
-                        </li> *@
 
 
                         @if (SignInManager.IsSignedIn(User))
                         {
-                          @*   <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                            </li> *@
                             <li class="nav-item">
                                     <a class="nav-link" asp-controller="Profile" asp-action="Index">Hello @UserManager.GetUserName(User)</a>
                             </li>

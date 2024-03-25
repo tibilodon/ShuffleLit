@@ -1,28 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ShuffleLit.Interfaces;
 using ShuffleLit.Models;
 using ShuffleLit.ViewModels;
 
+//  using IUserRepository
 namespace ShuffleLit.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<AppUser> _userManager;
-        private readonly IProfileRepository _profileRepository;
 
-        public ProfileController(IProfileRepository profileRepository, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
+        public ProfileController(UserManager<AppUser> userManager)
         {
-            _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
-            _profileRepository = profileRepository;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
 
         public async Task<IActionResult> Index()
         {
@@ -40,22 +31,31 @@ namespace ShuffleLit.Controllers
             return View("Error");
 
         }
-        //[HttpGet]
-        //public async Task<IActionResult> Index(UserDetailViewModel userDetailVM)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        ModelState.AddModelError("", "Failed to load profile");
-        //        return View("Index", userDetailVM);
-        //    }
-        //    AppUser user = await _profileRepository.GetByIdNoTracking(userDetailVM.Id);
-        //    return View(userDetailVM);
-        //}
-
-
         public IActionResult EditProfile()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(EditProfileViewModel editProfileVM)
+        {
+            //  get current user
+            AppUser user = await _userManager.GetUserAsync(User);
+            //check if user is still logged in
+            if (user != null)
+            {
+                //  generate token
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                //  append updated_at
+                user.PasswordChangedDate = DateTime.Now;
+                //  update password
+                var result = await _userManager.ResetPasswordAsync(user, code, editProfileVM.Password);
+                //  on success
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ResetPasswordConfirmation", "Account");
+                }
+            }// handle error
+            return View("Error");
         }
     }
 }

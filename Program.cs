@@ -14,8 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //  CUSTOM SERVICES
+//  for all auth related actions
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 //      SMTP
 //  Gmail Smtp service
 builder.Services.AddTransient<IGSMTPService, GSMTPService>();
