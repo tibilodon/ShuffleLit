@@ -16,6 +16,8 @@ builder.Services.AddControllersWithViews();
 //  CUSTOM SERVICES
 //  for all auth related actions
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+//  crud
+builder.Services.AddScoped<ILiteratureRepository, LiteratureRepository>();
 //      SMTP
 //  Gmail Smtp service
 builder.Services.AddTransient<IGSMTPService, GSMTPService>();

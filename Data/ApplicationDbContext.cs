@@ -9,6 +9,7 @@ namespace ShuffleLit.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+        public DbSet<Literature> Literatures { get; set; }
         //  add db
     }
 }
