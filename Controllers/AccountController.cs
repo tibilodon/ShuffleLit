@@ -25,7 +25,7 @@ namespace ShuffleLit.Controllers
         }
 
         //  register
-     
+
         public async Task<IActionResult> Register(string? returnUrl = null)
         {
             //  check for existimg role
@@ -36,6 +36,7 @@ namespace ShuffleLit.Controllers
             }
             RegisterViewModel registerVM = new RegisterViewModel();
             registerVM.ReturnUrl = returnUrl;
+            //registerVM.PasswordChangedDate = DateTime.Now;
 
             return View(registerVM);
         }
@@ -60,7 +61,9 @@ namespace ShuffleLit.Controllers
                 {
                     Email = registerVM.EmailAddress,
                     //  TODO: change this
-                    UserName = registerVM.EmailAddress
+                    UserName = registerVM.EmailAddress,
+                    PasswordChangedDate = DateTime.Now,
+
                 };
                 var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
                 if (newUserResponse.Succeeded)
@@ -184,6 +187,7 @@ namespace ShuffleLit.Controllers
             {
                 //  find user by email address
                 var user = await _userManager.FindByEmailAsync(resetPasswordVM.Email);
+                user.PasswordChangedDate = DateTime.Now;
                 //  email address is not present in DB
                 if (user == null)
                 {
@@ -192,6 +196,8 @@ namespace ShuffleLit.Controllers
                     return View();
                 }
                 //  otherwise, update PW
+                //resetPasswordVM.PasswordChangedDate = DateTime.Now;
+
                 var result = await _userManager.ResetPasswordAsync(user, resetPasswordVM.Code, resetPasswordVM.Password);
                 //  on success
                 if (result.Succeeded)
@@ -208,5 +214,7 @@ namespace ShuffleLit.Controllers
         {
             return View();
         }
+
+
     }
 }

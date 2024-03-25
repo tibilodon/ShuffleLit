@@ -42,11 +42,11 @@
 
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item">
+                          @*   <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                            </li>
+                            </li> *@
                             <li class="nav-item">
-                                <a class="nav-link" href="/Dashboard">Hello @UserManager.GetUserName(User)</a>
+                                    <a class="nav-link" asp-controller="Profile" asp-action="Index">Hello @UserManager.GetUserName(User)</a>
                             </li>
                             <li class="nav-item">
                                 <form id="logoutForm" method="post" class="form-inline" asp-controller="Account"

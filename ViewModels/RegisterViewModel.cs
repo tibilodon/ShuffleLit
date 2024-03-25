@@ -18,5 +18,6 @@ namespace ShuffleLit.ViewModels
         public string ConfirmPassword { get; set; }
         //  redirect url
         public string? ReturnUrl { get; set; }
+        public DateTime? PasswordChangedDate { get; set; }
     }
 }

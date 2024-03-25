@@ -33,6 +33,7 @@ namespace ShuffleLit.Controllers
                     Id = user.Id,
                     UserName = user.UserName,
                     ProfileImageUrl = user.ProfileImageUrl,
+                    PasswordChangedDate = user.PasswordChangedDate,
                 };
                 result.Add(userVM);
             }
@@ -48,6 +49,7 @@ namespace ShuffleLit.Controllers
             {
                 Id = user.Id,
                 UserName = user.UserName,
+                PasswordChangedDate = user.PasswordChangedDate
 
 
             };

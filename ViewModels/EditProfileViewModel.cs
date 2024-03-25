@@ -2,25 +2,22 @@
 
 namespace ShuffleLit.ViewModels
 {
-    public class ResetPasswordViewModel
+    public class EditProfileViewModel
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
 
+
+        public string? ProfileImageUrl { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         public string Password { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
-        //  code - paramkey
-        public string Code { get; set; }
+        //  redirect url
+        public string? ReturnUrl { get; set; }
         public DateTime? PasswordChangedDate { get; set; }
 
     }
-
 }

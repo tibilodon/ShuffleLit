@@ -8,6 +8,8 @@ namespace ShuffleLit.ViewModels
         [EmailAddress]
         [Display(Name = "Email address")]
         public string Email { get; set; }
+        public DateTime? PasswordChangedDate { get; set; }
+
 
     }
 }
