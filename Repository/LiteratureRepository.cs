@@ -9,10 +9,14 @@ namespace ShuffleLit.Repository
     {
         //  create the sql --> save changes in DB
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         //  bring id DB
-        public LiteratureRepository(ApplicationDbContext context)
+        public LiteratureRepository(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
+
         }
         public bool Add(Literature literature)
         {
@@ -29,6 +33,13 @@ namespace ShuffleLit.Repository
         public async Task<IEnumerable<Literature>> GetAll()
         {
             return await _context.Literatures.ToListAsync();
+        }
+        //  get all user records
+        public async Task<List<Literature>> GetAllUserLiteratures()
+        {
+            var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
+            var userLiteratures = _context.Literatures.Where(l => l.AppUser.Id == curUser).ToList();
+            return userLiteratures;
         }
 
         public async Task<Literature> GetByIdAsync(int id)

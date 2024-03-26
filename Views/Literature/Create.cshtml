@@ -1,0 +1,69 @@
+﻿@using ShuffleLit.Data.Enum
+@using ShuffleLit.ViewModels
+@model CreateLiteratureViewModel
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <!--AppUser-->
+    <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" />
+    <!--Title-->
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" type="text" class="form-control" aria-describedby="titleHelp" placeholder="Enter title">
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <!--Description-->
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" type="text" class="form-control" aria-describedby="DescriptionHelp" placeholder="Enter Description">
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <!--LinkUrl-->
+    <div class="form-group">
+        <label asp-for="LinkUrl">LinkUrl</label>
+        <input asp-for="LinkUrl" type="text" class="form-control" aria-describedby="LinkUrlHelp" placeholder="Enter LinkUrl">
+        <span asp-validation-for="LinkUrl" class="text-danger"></span>
+    </div>
+
+    <!--category-->
+    <div class="form-group">
+        <label asp-for="LiteratureCategory">LiteratureCategory</label>
+        <select asp-for="LiteratureCategory" asp-items="@Html.GetEnumSelectList<LiteratureCategory>()">
+            @* <option>--Select--</option> *@
+        </select>
+        <span asp-validation-for="LiteratureCategory" class="text-danger"></span>
+    </div>
+    <!--state-->
+    <div class="form-group">
+        <label asp-for="LiteratureState">LiteratureState</label>
+        <select asp-for="LiteratureState" asp-items="@Html.GetEnumSelectList<LiteratureState>()">
+            @* <option>--Select--</option> *@
+        </select>
+        <span asp-validation-for="LiteratureState" class="text-danger"></span>
+    </div>
+    <!--Address \\ street-->
+@*     <div class="form-group">
+        <label asp-for="Address.Street">Address.Street</label>
+        <input asp-for="Address.Street" type="text" class="form-control" aria-describedby="Address.StreetHelp" placeholder="Enter Address.Street">
+        <span asp-validation-for="Address.Street" class="text-danger"></span>
+    </div> *@
+
+    <!--Address \\ city-->
+@*     <div class="form-group">
+        <label asp-for="Address.City">Address.City</label>
+        <input asp-for="Address.City" type="text" class="form-control" aria-describedby="Address.CityHelp" placeholder="Enter Address.City">
+        <span asp-validation-for="Address.City" class="text-danger"></span>
+    </div>
+    <!--Address \\ state-->
+    <div class="form-group">
+        <label asp-for="Address.State">Address.State</label>
+        <input asp-for="Address.State" type="text" class="form-control" aria-describedby="Address.StateHelp" placeholder="Enter Address.State">
+        <span asp-validation-for="Address.State" class="text-danger"></span>
+    </div>
+    <!--Image-->
+    <div class="form-group">
+        <label asp-for="Image">Image</label>
+        <input asp-for="Image" type="file" class="form-control" aria-describedby="ImageHelp" placeholder="Enter Image">
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div> *@
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

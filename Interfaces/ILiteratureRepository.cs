@@ -5,6 +5,7 @@ namespace ShuffleLit.Interfaces
     public interface ILiteratureRepository
     {
         Task<IEnumerable<Literature>> GetAll();
+        Task<List<Literature>> GetAllUserLiteratures();
         Task<Literature> GetByIdAsync(int id);
         Task<Literature> GetByIdAsyncNoTracking(int id);
         bool Add(Literature literature);
