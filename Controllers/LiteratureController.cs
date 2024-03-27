@@ -11,12 +11,14 @@ namespace ShuffleLit.Controllers
         private readonly ILiteratureRepository _literatureRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly ILinkUrlFormatService _linkUrlFormatService;
 
-        public LiteratureController(ILiteratureRepository literatureRepository, IHttpContextAccessor httpContextAccessor, SignInManager<AppUser> signInManager)
+        public LiteratureController(ILiteratureRepository literatureRepository, IHttpContextAccessor httpContextAccessor, SignInManager<AppUser> signInManager, ILinkUrlFormatService linkUrlFormatService)
         {
             _literatureRepository = literatureRepository;
             _httpContextAccessor = httpContextAccessor;
             _signInManager = signInManager;
+            _linkUrlFormatService = linkUrlFormatService;
         }
 
         //      CREATE
@@ -39,13 +41,13 @@ namespace ShuffleLit.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                var formatUrl = _linkUrlFormatService.FormatYoutubeUrl(createLiteratureVM.LinkUrl);
                 var literature = new Literature
                 {
                     Title = createLiteratureVM.Title,
                     Description = createLiteratureVM.Description,
                     AppUserId = createLiteratureVM.AppUserId,
-                    LinkUrl = createLiteratureVM.LinkUrl,
+                    LinkUrl = formatUrl,
                     LiteratureCategory = createLiteratureVM.LiteratureCategory,
                     LiteratureState = createLiteratureVM.LiteratureState
 
@@ -112,6 +114,8 @@ namespace ShuffleLit.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, EditLiteratureViewModel editLiteratureVM)
         {
+            var formatUrl = _linkUrlFormatService.FormatYoutubeUrl(editLiteratureVM.LinkUrl);
+
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Failed to edit lit");
@@ -125,7 +129,7 @@ namespace ShuffleLit.Controllers
                     Id = id,
                     Title = editLiteratureVM.Title,
                     Description = editLiteratureVM.Description,
-                    LinkUrl = editLiteratureVM.LinkUrl,
+                    LinkUrl = formatUrl,
                     LiteratureCategory = editLiteratureVM.LiteratureCategory,
                     LiteratureState = editLiteratureVM.LiteratureState,
                     AppUserId = userLiterature.AppUserId

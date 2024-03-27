@@ -21,6 +21,8 @@ builder.Services.AddScoped<ILiteratureRepository, LiteratureRepository>();
 //      SMTP
 //  Gmail Smtp service
 builder.Services.AddTransient<IGSMTPService, GSMTPService>();
+//  url formatter
+builder.Services.AddScoped<ILinkUrlFormatService, LinkUrlFormatService>();
 
 
 //  SQL server
