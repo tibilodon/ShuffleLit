@@ -21,6 +21,7 @@ builder.Services.AddScoped<ILiteratureRepository, LiteratureRepository>();
 //      SMTP
 //  Gmail Smtp service
 builder.Services.AddTransient<IGSMTPService, GSMTPService>();
+builder.Services.AddScoped<IPlaceholderImgService, PlaceholderImgService>();
 
 
 
@@ -49,7 +50,7 @@ builder.Services.Configure<IdentityOptions>(opt =>
 });
 //  Gmail smtp settings
 builder.Services.Configure<GSMTPSettings>(builder.Configuration.GetSection("GSMTPSettings"));
-
+//placeholder image
 
 
 var app = builder.Build();

@@ -11,12 +11,14 @@ namespace ShuffleLit.Controllers
         private readonly ILiteratureRepository _literatureRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IPlaceholderImgService _placeholderImg;
 
-        public LiteratureController(ILiteratureRepository literatureRepository, IHttpContextAccessor httpContextAccessor, SignInManager<AppUser> signInManager)
+        public LiteratureController(ILiteratureRepository literatureRepository, IHttpContextAccessor httpContextAccessor, SignInManager<AppUser> signInManager, IPlaceholderImgService placeholderImg)
         {
             _literatureRepository = literatureRepository;
             _httpContextAccessor = httpContextAccessor;
             _signInManager = signInManager;
+            _placeholderImg = placeholderImg;
         }
 
         //      CREATE
@@ -73,6 +75,8 @@ namespace ShuffleLit.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             Literature literature = await _literatureRepository.GetByIdAsync(id);
+            var placeholderIcon = _placeholderImg.PlaceholderImg(literature.LiteratureCategory);
+            ViewData["ImgUrl"] = placeholderIcon;
             return View(literature);
         }
 
@@ -82,7 +86,7 @@ namespace ShuffleLit.Controllers
             var userLiteratures = await _literatureRepository.GetAllUserLiteratures();
             var literatureDashboardVM = new LiteratureDashboardViewModel
             {
-                Literatures = userLiteratures
+                Literatures = userLiteratures,
             };
 
             return View(literatureDashboardVM);
