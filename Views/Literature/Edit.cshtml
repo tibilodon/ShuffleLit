@@ -1,10 +1,9 @@
 ﻿@using ShuffleLit.Data.Enum
 @using ShuffleLit.ViewModels
-@model CreateLiteratureViewModel
-
-<form method="post" asp-action="Create" enctype="multipart/form-data">
+@model EditLiteratureViewModel
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
     <!--AppUser-->
-    <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" />
+    @* <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" /> *@
     <!--Title-->
     <div class="form-group">
         <label asp-for="Title">Title</label>

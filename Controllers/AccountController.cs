@@ -214,7 +214,11 @@ namespace ShuffleLit.Controllers
         {
             return View();
         }
-
+        //  unauthenticated
+        public IActionResult Unauthenticated()
+        {
+            return View();
+        }
 
     }
 }
