@@ -2,6 +2,7 @@
 @using ShuffleLit.Interfaces
 @model IEnumerable<Literature>
 @inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 @inject IPlaceholderImgService PlaceholderImg
 
 <div class="album py-5 bg-light">
@@ -31,6 +32,10 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a asp-controller="Literature" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">View</a>
+                                    @if (UserManager.GetUserId(User) == item.AppUserId)
+                                    {
+                                        <a asp-controller="Literature" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    }
 
                                     <!--Admin access-->
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))

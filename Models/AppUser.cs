@@ -7,10 +7,5 @@ namespace ShuffleLit.Models
         //public string? NickName { get; set; }
         public string? ProfileImageUrl { get; set; }
         public DateTime? PasswordChangedDate { get; set; }
-
-        //public AppUser(DateTime? passwordChangedDate)
-        //{
-        //    PasswordChangedDate = passwordChangedDate;
-        //}
     }
 }
