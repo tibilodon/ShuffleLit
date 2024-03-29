@@ -22,7 +22,12 @@ builder.Services.AddScoped<ILiteratureRepository, LiteratureRepository>();
 //  Gmail Smtp service
 builder.Services.AddTransient<IGSMTPService, GSMTPService>();
 builder.Services.AddScoped<IPlaceholderImgService, PlaceholderImgService>();
-
+//  cookies consent
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy=SameSiteMode.None;
+});
 
 
 //  SQL server
@@ -71,6 +76,9 @@ app.UseRouting();
 //  role based auth
 app.UseAuthentication();
 app.UseAuthorization();
+
+//  cookies policy
+app.UseCookiePolicy();
 
 app.MapControllerRoute(
     name: "default",

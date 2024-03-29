@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
@@ -12,72 +12,84 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ShuffleLit.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ShuffleLit</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Index"?"active":"")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+<body class="h-100">
+
+    <div class="cover-container d-flex flex-column h-100 ">
+
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-2">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">ShuffleLit</a>
+            <button onclick="toggle()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Index"?"active":"")">
+
+                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <!--authenticated-->
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Literature"?"active":"")">
+
+                            <a class="nav-link  " asp-controller="Literature" asp-action="Index">Literatures</a>
+                        </li>
+                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Profile"?"active":"")">
+
+                            <a class="nav-link " asp-controller="Profile" asp-action="Index">Hello @UserManager.GetUserName(User)</a>
                         </li>
 
-                        <!--authenticated-->
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString()=="Literature"?"active":"")" asp-controller="Literature" asp-action="Index">Literatures</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString()=="Profile"?"active":"")" asp-controller="Profile" asp-action="Index">Hello @UserManager.GetUserName(User)</a>
-                            </li>
-                            <li class="nav-item">
-                                <form id="logoutForm" method="post" class="form-inline" asp-controller="Account"
-                                      asp-action="Logout">
-                                    <button type="submit" class="btn nav-link">Logout</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString()=="Literature"?"active":"")" asp-area="" asp-controller="Literature" asp-action="Index">Literatures</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark  @(ViewContext.RouteData.Values["Controller"].ToString()=="Account" && ViewContext.RouteData.Values["Action"].ToString()=="Login"?"active":"")" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark  @(ViewContext.RouteData.Values["Controller"].ToString()=="Account"&& ViewContext.RouteData.Values["Action"].ToString()=="Register"?"active":"")" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                            </li>
+                        <form id="logoutForm" method="post" class="nav-item" asp-controller="Account"
+                              asp-action="Logout">
+                            <button type="submit" class="btn nav-link">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Literature"?"active":"")">
 
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark  @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Privacy"?"active":"")" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link " asp-area="" asp-controller="Literature" asp-action="Index">Literatures</a>
                         </li>
-                    </ul>
-                </div>
+                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Account" && ViewContext.RouteData.Values["Action"].ToString()=="Login"?"active":"")">
+
+                            <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Account"&& ViewContext.RouteData.Values["Action"].ToString()=="Register"?"active":"")">
+                            <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                    }
+                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Privacy"?"active":"")">
+
+                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+
+                </ul>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+        <main role="main" class="mt-5 mb-3 p-3 h-100">
             @RenderBody()
         </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+        <footer class="border-top fixed-bottom text-muted bg-light">
             &copy; 2024 - ShuffleLit - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> *@
+        <!--handle toggle functionality -->
+        <script>
+            function toggle() {
+                var element = document.getElementById("navbarCollapse");
+                element.classList.toggle("collapse");
+            }
+        </script>
+        @await RenderSectionAsync("Scripts", required: false)
+
+
+    </div>
+    <!--cookie consent-->
+    <partial name="_CookieConsentPartial" />
 </body>
 </html>
