@@ -7,5 +7,6 @@ namespace ShuffleLit.Models
         //public string? NickName { get; set; }
         public string? ProfileImageUrl { get; set; }
         public DateTime? PasswordChangedDate { get; set; }
+        public ICollection<LiteratureCollection>? LiteratureCollections { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace ShuffleLit.Models
         public string? AppUserId { get; set; }
         public AppUser? AppUser { get; set; }
 
+        public ICollection<LiteratureCollection> LiteratureCollections { get; set;}
 
 
     }

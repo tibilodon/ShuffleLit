@@ -18,6 +18,11 @@ namespace ShuffleLit.Repository
             throw new NotImplementedException();
         }
 
+        public bool AppUserExists(string AppUserId)
+        {
+            return _context.Users.Any(u => u.Id == AppUserId);
+        }
+
         //public bool Delete(AppUser user)
         //{
         //    throw new NotImplementedException();
@@ -28,6 +33,26 @@ namespace ShuffleLit.Repository
             return await _context.Users.ToListAsync();
         }
 
+        //
+        public AppUser GetAppUser(string appUserId)
+        {
+            return _context.Users.Where(o => o.Id == appUserId).FirstOrDefault();
+        }
+
+        public ICollection<AppUser> GetAppUserOfALiterature(int literatureId)
+        {
+            return _context.LiteratureCollections.Where(lit => lit.Literature.Id == literatureId).Select(u => u.AppUser).ToList();
+        }
+
+        public ICollection<AppUser> GetAppUsers()
+        {
+            return _context.Users.ToList();
+        }
+
+        public ICollection<Literature> GetLiteratureByAppUserId(string appUserId)
+        {
+            return _context.LiteratureCollections.Where(lc => lc.AppUser.Id == appUserId).Select(lit => lit.Literature).ToList();
+        }
 
         public async Task<AppUser> GetUserById(string id)
         {
