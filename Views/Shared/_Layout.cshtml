@@ -16,27 +16,27 @@
 
     <div class="cover-container d-flex flex-column h-100 ">
 
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-2">
+        <nav class="navbar nav-masthead navbar-expand-md navbar-dark fixed-top bg-dark p-2">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">ShuffleLit</a>
             <button onclick="toggle()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Index"?"active":"")">
+                    <li class="nav-item ">
 
-                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Index"?"active":"")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <!--authenticated-->
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Literature"?"active":"")">
+                        <li class="nav-item">
 
-                            <a class="nav-link  " asp-controller="Literature" asp-action="Index">Literatures</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Literature"?"active":"")" asp-controller="Literature" asp-action="Index">Literatures</a>
                         </li>
-                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Profile"?"active":"")">
+                        <li class="nav-item">
 
-                            <a class="nav-link " asp-controller="Profile" asp-action="Index">Hello @UserManager.GetUserName(User)</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Profile"?"active":"")" asp-controller="Profile" asp-action="Index">Hello @UserManager.GetUserName(User)</a>
                         </li>
 
                         <form id="logoutForm" method="post" class="nav-item" asp-controller="Account"
@@ -46,21 +46,21 @@
                     }
                     else
                     {
-                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Literature"?"active":"")">
+                        <li class="nav-item">
 
-                            <a class="nav-link " asp-area="" asp-controller="Literature" asp-action="Index">Literatures</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Literature"?"active":"")" asp-area="" asp-controller="Literature" asp-action="Index">Literatures</a>
                         </li>
-                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Account" && ViewContext.RouteData.Values["Action"].ToString()=="Login"?"active":"")">
+                        <li class="nav-item">
 
-                            <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Account" && ViewContext.RouteData.Values["Action"].ToString()=="Login"?"active":"")" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                         </li>
-                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Account"&& ViewContext.RouteData.Values["Action"].ToString()=="Register"?"active":"")">
-                            <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Account"&& ViewContext.RouteData.Values["Action"].ToString()=="Register"?"active":"")" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                         </li>
                     }
-                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Privacy"?"active":"")">
+                    <li class="nav-item">
 
-                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Privacy"?"active":"")" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
 
                 </ul>
