@@ -53,6 +53,12 @@ namespace ShuffleLit.Controllers
 
                 };
                 _literatureRepository.Add(literature);
+                var literatureCollection = new LiteratureCollection
+                {
+                    AppUserId = createLiteratureVM.AppUserId,
+                    LiteratureId = literature.Id,
+                };
+
                 return RedirectToAction("Index");
             }
             //  handle modelstate error
