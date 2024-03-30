@@ -23,7 +23,23 @@ namespace ShuffleLit.Repository
             return Save();
         }
 
+        public bool AddLiteratureToUser(string appUserId, int literatureId)
+        {
+            var literatureCollection = new LiteratureCollection
+            {
+                AppUserId = appUserId,
+                LiteratureId = literatureId
+            };
+            _context.Add(literatureCollection);
+            return Save();
+        }
+
         public bool Delete(LiteratureCollection literatureCollection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteLiteratureFromUser(string appUserId, int literatureId)
         {
             throw new NotImplementedException();
         }
@@ -33,20 +49,9 @@ namespace ShuffleLit.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<LiteratureCollection>> GetAllLiteratureCollections()
+        public Task<IEnumerable<LiteratureCollection>> GetCollectionForUser(string appUserId)
         {
             throw new NotImplementedException();
-        }
-
-        public Task<LiteratureCollection> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<LiteratureCollection> GetByIdAsyncNoTracking(int id)
-        {
-            return await _context.LiteratureCollections.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
-
         }
 
         public bool Save()

@@ -5,13 +5,15 @@ namespace ShuffleLit.Interfaces
     public interface ILiteratureCollectionRepository
     {
         Task<IEnumerable<LiteratureCollection>> GetAll();
-        Task<List<LiteratureCollection>> GetAllLiteratureCollections();
-        Task<LiteratureCollection> GetByIdAsync(int id);
-        Task<LiteratureCollection> GetByIdAsyncNoTracking(int id);
-
+        //Task<List<LiteratureCollection>> GetAllLiteratureCollections();
+        //Task<LiteratureCollection> GetByIdAsync(int id);
+        //Task<LiteratureCollection> GetByIdAsyncNoTracking(int id);
         bool Add(LiteratureCollection literatureCollection);
-        bool Update(LiteratureCollection literatureCollection);
+        bool AddLiteratureToUser(string appUserId, int literatureId);
+        //bool Update(LiteratureCollection literatureCollection);
         bool Delete(LiteratureCollection literatureCollection);
+        bool DeleteLiteratureFromUser(string appUserId, int literatureId);
         bool Save();
+        Task<IEnumerable<LiteratureCollection>> GetCollectionForUser(string appUserId);
     }
 }

@@ -12,13 +12,15 @@ namespace ShuffleLit.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IPlaceholderImgService _placeholderImg;
+        private readonly ILiteratureCollectionRepository _literatureCollectionRepository;
 
-        public LiteratureController(ILiteratureRepository literatureRepository, IHttpContextAccessor httpContextAccessor, SignInManager<AppUser> signInManager, IPlaceholderImgService placeholderImg)
+        public LiteratureController(ILiteratureRepository literatureRepository, IHttpContextAccessor httpContextAccessor, SignInManager<AppUser> signInManager, IPlaceholderImgService placeholderImg, ILiteratureCollectionRepository literatureCollectionRepository)
         {
             _literatureRepository = literatureRepository;
             _httpContextAccessor = httpContextAccessor;
             _signInManager = signInManager;
             _placeholderImg = placeholderImg;
+            _literatureCollectionRepository = literatureCollectionRepository;
         }
 
         //      CREATE
@@ -56,8 +58,10 @@ namespace ShuffleLit.Controllers
                 var literatureCollection = new LiteratureCollection
                 {
                     AppUserId = createLiteratureVM.AppUserId,
-                    LiteratureId = literature.Id,
+                    LiteratureId = literature.Id
                 };
+                _literatureCollectionRepository.Add(literatureCollection);
+
 
                 return RedirectToAction("Index");
             }

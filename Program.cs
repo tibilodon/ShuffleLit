@@ -18,6 +18,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 //  crud
 builder.Services.AddScoped<ILiteratureRepository, LiteratureRepository>();
+builder.Services.AddScoped<ILiteratureCollectionRepository, LiteratureCollectionRepository>();
+
 //      SMTP
 //  Gmail Smtp service
 builder.Services.AddTransient<IGSMTPService, GSMTPService>();
@@ -26,7 +28,7 @@ builder.Services.AddScoped<IPlaceholderImgService, PlaceholderImgService>();
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
-    options.MinimumSameSitePolicy=SameSiteMode.None;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
 
