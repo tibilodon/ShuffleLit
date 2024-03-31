@@ -13,14 +13,16 @@ namespace ShuffleLit.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IPlaceholderImgService _placeholderImg;
         private readonly ILiteratureCollectionRepository _literatureCollectionRepository;
+        private readonly UserManager<AppUser> _userManager;
 
-        public LiteratureController(ILiteratureRepository literatureRepository, IHttpContextAccessor httpContextAccessor, SignInManager<AppUser> signInManager, IPlaceholderImgService placeholderImg, ILiteratureCollectionRepository literatureCollectionRepository)
+        public LiteratureController(ILiteratureRepository literatureRepository, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IPlaceholderImgService placeholderImg, ILiteratureCollectionRepository literatureCollectionRepository)
         {
             _literatureRepository = literatureRepository;
             _httpContextAccessor = httpContextAccessor;
             _signInManager = signInManager;
             _placeholderImg = placeholderImg;
             _literatureCollectionRepository = literatureCollectionRepository;
+            _userManager = userManager;
         }
 
         //      CREATE
@@ -55,6 +57,7 @@ namespace ShuffleLit.Controllers
 
                 };
                 _literatureRepository.Add(literature);
+                //  add record to collection
                 var literatureCollection = new LiteratureCollection
                 {
                     AppUserId = createLiteratureVM.AppUserId,
@@ -176,8 +179,41 @@ namespace ShuffleLit.Controllers
                 return View("Error");
             }
             _literatureRepository.Delete(literatureDetails);
+            _literatureCollectionRepository.DeleteLiteratureCollectionFromUser(literatureDetails.AppUserId, literatureDetails.Id);
             return RedirectToAction("Dashboard");
         }
+
+        //[HttpGet]
+        //public IActionResult AddToCollection(int id)
+        //{
+        //    int literatureId = id;
+        //    _literatureId = literatureId;
+        //    return View();
+        //}
+
+        [HttpPost]
+        public async Task<IActionResult> AddToCollection(int id)
+        {
+            //  get the logged in user
+            AppUser user = await _userManager.GetUserAsync(User);
+            //  fetch the record
+            var literature = await _literatureRepository.GetByIdAsync(id);
+            //  fetch the join table
+            //  see if record is already in their collection
+            var literatureCollection = await _literatureCollectionRepository.FindAppUserCollectionById(user.Id, id);
+            //  if user does not have the join table
+            if (literatureCollection == null)
+            {
+                //  save it to collection - AddLiteratureToUser
+                _literatureCollectionRepository.AddLiteratureToUser(user.Id, literature.Id);
+                //  redirect the user back to index page
+                return RedirectToAction("Index");
+            }
+            //  handle error
+            return View("Error");
+
+        }
+
     }
 }
 

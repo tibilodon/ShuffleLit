@@ -32,7 +32,7 @@ namespace ShuffleLit.Repository
 
         public async Task<IEnumerable<Literature>> GetAll()
         {
-            return await _context.Literatures.ToListAsync();
+            return await _context.Literatures.Include(l => l.LiteratureCollections).ToListAsync();
         }
         //  get all user records
         public async Task<List<Literature>> GetAllUserLiteratures()
