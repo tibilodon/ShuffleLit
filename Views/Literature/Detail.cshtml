@@ -10,7 +10,18 @@
         <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-primary">@Model.LiteratureCategory</strong>
             <h3 class="mb-0">@Model.Title</h3>
-            <div class="mb-1 text-muted">@Model.LiteratureState</div>
+            <!--state for authenticated, in collection, NOT author-->
+            @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User)!=Model.AppUserId && Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
+            {
+
+                <div class="mb-1 text-muted">@Model.LiteratureCollections.FirstOrDefault(lc => lc.AppUserId == UserManager.GetUserId(User) && lc.LiteratureId == Model.Id).LiteratureState</div>
+            }
+            <!--author's state indicator-->
+            @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User)==Model.AppUserId)
+            {
+                <div class="mb-1 text-muted">@Model.LiteratureState</div>
+
+            }
             <p class="card-text mb-auto">@Model.Description</p>
             @* <a href="#" class="stretched-link">Continue reading</a> *@
         </div>
