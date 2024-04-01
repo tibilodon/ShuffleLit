@@ -1,21 +1,32 @@
-﻿@using ShuffleLit.Services
+﻿@using Microsoft.AspNetCore.Identity
+@using ShuffleLit.Services
 @model Literature
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 
 
 <div class="p-4 p-md-5 mb-4 ">
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary">@Model.LiteratureCategory</strong>
-                <h3 class="mb-0">@Model.Title</h3>
-                <div class="mb-1 text-muted">@Model.LiteratureState</div>
-                <p class="card-text mb-auto">@Model.Description</p>
-                @* <a href="#" class="stretched-link">Continue reading</a> *@
-            </div>
-            <div class="col-auto d-none d-lg-block">
-                <!--extract thumbnail feature-->
-                
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary">@Model.LiteratureCategory</strong>
+            <h3 class="mb-0">@Model.Title</h3>
+            <div class="mb-1 text-muted">@Model.LiteratureState</div>
+            <p class="card-text mb-auto">@Model.Description</p>
+            @* <a href="#" class="stretched-link">Continue reading</a> *@
+        </div>
+        <div class="col-auto d-none d-lg-block">
+            <!--extract thumbnail feature-->
+
             <img alt="thumbnail" class="bd-placeholder-img" width="200" height="250" src="@ViewData["ImgUrl"]" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" />
-           @* <p>@ViewData</p> *@
-            </div>
+            @* <p>@ViewData</p> *@
+            @if (User.Identity.IsAuthenticated && !Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
+            {
+                <form method="post" class="nav-item" asp-controller="Literature"
+                      asp-action="AddToCollection">
+                    <input name="id" value="@Model.Id" hidden />
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Add To Own Collection</button>
+                </form>
+            }
         </div>
     </div>
+</div>

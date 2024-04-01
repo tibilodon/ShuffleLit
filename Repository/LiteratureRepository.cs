@@ -32,6 +32,7 @@ namespace ShuffleLit.Repository
 
         public async Task<IEnumerable<Literature>> GetAll()
         {
+            //  include join table
             return await _context.Literatures.Include(l => l.LiteratureCollections).ToListAsync();
         }
         //  get all user records
@@ -44,12 +45,14 @@ namespace ShuffleLit.Repository
 
         public async Task<Literature> GetByIdAsync(int id)
         {
-            return await _context.Literatures.FirstOrDefaultAsync(i => i.Id == id);
+            //  include join table
+            return await _context.Literatures.Include(l => l.LiteratureCollections).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<Literature> GetByIdAsyncNoTracking(int id)
         {
-            return await _context.Literatures.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+            //  include join table
+            return await _context.Literatures.AsNoTracking().Include(l => l.LiteratureCollections).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public bool Save()

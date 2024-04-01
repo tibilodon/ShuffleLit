@@ -183,14 +183,6 @@ namespace ShuffleLit.Controllers
             return RedirectToAction("Dashboard");
         }
 
-        //[HttpGet]
-        //public IActionResult AddToCollection(int id)
-        //{
-        //    int literatureId = id;
-        //    _literatureId = literatureId;
-        //    return View();
-        //}
-
         [HttpPost]
         public async Task<IActionResult> AddToCollection(int id)
         {
@@ -207,7 +199,7 @@ namespace ShuffleLit.Controllers
                 //  save it to collection - AddLiteratureToUser
                 _literatureCollectionRepository.AddLiteratureToUser(user.Id, literature.Id);
                 //  redirect the user back to index page
-                return RedirectToAction("Index");
+                return RedirectToAction("Dashboard");
             }
             //  handle error
             return View("Error");

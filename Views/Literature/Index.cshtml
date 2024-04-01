@@ -38,17 +38,6 @@
                                     {
                                         <a asp-controller="Literature" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
                                     }
-                                    @if (!item.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
-                                    @* @if (UserManager.GetUserId(User) != item.AppUserId && item.LiteratureCollections.Any(lc => lc.AppUserId != UserManager.GetUserId(User))) *@
-                                    {
-                                        @* <a asp-controller="Literature" asp-action="AddToCollection" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Add To Own Collection</a> *@
-                                        <form  method="post" class="nav-item" asp-controller="Literature"
-                                              asp-action="AddToCollection">
-                                            <input name="id" value="@item.Id" hidden />
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Add To Own Collection</button>
-                                        </form>
-                                    }
-
                                     <!--Admin access-->
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
                                     {
