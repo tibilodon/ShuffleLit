@@ -60,9 +60,13 @@ namespace ShuffleLit.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<LiteratureCollection>> GetLiteratureCollectionForUser(string appUserId)
+        public async Task<List<Literature>> GetLiteratureCollectionForUser()
         {
-            throw new NotImplementedException();
+            var curUser = _httpContextAccessor.HttpContext.User.GetUserId();
+            //var literatureCollections = _context.LiteratureCollections.Include(lc => lc.Literature).Where(c => c.AppUserId == curUser).ToList();
+            //return literatureCollections;
+            var literatures = _context.Literatures.Include(l => l.LiteratureCollections).Where(l => l.AppUserId != curUser && l.LiteratureCollections.Any(lc => lc.AppUserId == curUser)).ToList();
+            return literatures;
         }
 
         public bool Save()

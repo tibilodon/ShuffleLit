@@ -105,6 +105,18 @@ namespace ShuffleLit.Controllers
             return View(literatureDashboardVM);
         }
 
+        //  read user collections
+        public async Task<IActionResult> Collection()
+        {
+            var userCollections = await _literatureCollectionRepository.GetLiteratureCollectionForUser();
+            var literatureCollectionVM = new LiteratureCollectionViewModel
+            {
+                Literatures = userCollections,
+            };
+            return View(literatureCollectionVM);
+        }
+
+
         //      UPDATE
         public async Task<IActionResult> Edit(int id)
         {

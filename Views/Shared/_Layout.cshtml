@@ -65,9 +65,24 @@
 
                 </ul>
             </div>
+
         </nav>
 
         <main role="main" class="mt-5 mb-3 p-3 h-100">
+            @if (ViewContext.RouteData.Values["Controller"].ToString() == "Literature")
+            {
+                <a type="button" class="btn btn-primary" asp-area="" asp-controller="Literature" asp-action="Index">All Records</a>
+                <!--authenticated user access-->
+                @if (User.Identity.IsAuthenticated &&  !new string[] { "Edit", "Create" }.Any(c => ViewContext.RouteData.Values["Action"].ToString().Contains(c)))
+                {
+                    <!--create new record-->
+                    <a type="button" class="btn btn-primary" asp-area="" asp-controller="Literature" asp-action="Create">Create New Record</a>
+                    <!--navigate to user records-->
+                    <a type="button" class="btn btn-primary" asp-area="" asp-controller="Literature" asp-action="Dashboard">Own Records</a>
+                    <a type="button" class="btn btn-primary" asp-area="" asp-controller="Literature" asp-action="Collection">Own Collection</a>
+
+                }
+            }
             @RenderBody()
         </main>
 

@@ -14,7 +14,7 @@ namespace ShuffleLit.Interfaces
         bool Delete(LiteratureCollection literatureCollection);
         Task<LiteratureCollection> DeleteLiteratureCollectionFromUser(string appUserId, int literatureId);
         bool Save();
-        Task<IEnumerable<LiteratureCollection>> GetLiteratureCollectionForUser(string appUserId);
+        Task<List<Literature>> GetLiteratureCollectionForUser();
         Task<LiteratureCollection> FindAppUserCollectionById(string appUserId, int literatureId);
     }
 }
