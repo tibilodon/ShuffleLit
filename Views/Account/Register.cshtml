@@ -2,7 +2,7 @@
 @model RegisterViewModel
 
 @{
-    ViewData["Title"] = "Sign up";
+    ViewData["Title"] = "Register";
 }
 
  @if (TempData["Error"] != null)
@@ -42,8 +42,11 @@
 
           <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
           <hr class="my-4">
+
                 <a class="text-center" asp-action="ForgotPassword">Forgot your password?</a>
         </form>
+        <small>Already a member?</small>
+            <a asp-action="Login" class="w-100 btn btn-lg btn-success" >Log In</a>
       </div>
     </div>
   </div>

@@ -4,13 +4,17 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
+@{
+    ViewData["Title"] = "Details";
+}
+
 
 <div class="p-4 p-md-5 mb-4 ">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-primary">@Model.LiteratureCategory</strong>
             <h3 class="mb-0">@Model.Title</h3>
-            <!--state for authenticated, in collection, NOT author-->
+        @*     <!--state for authenticated, in collection, NOT author-->
             @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User) != Model.AppUserId && Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
             {
 
@@ -21,7 +25,7 @@
             {
                 <div class="mb-1 text-muted">@Model.LiteratureState</div>
 
-            }
+            } *@
             <p class="card-text mb-auto">@Model.Description</p>
             @* <a href="#" class="stretched-link">Continue reading</a> *@
         </div>

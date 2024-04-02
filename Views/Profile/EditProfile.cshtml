@@ -1,5 +1,10 @@
 ﻿@using ShuffleLit.ViewModels
 @model EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
 <form method="post" asp-action="EditProfile" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Password">Password</label>

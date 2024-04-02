@@ -2,6 +2,10 @@
 @using ShuffleLit.ViewModels
 @model CreateLiteratureViewModel
 
+@{
+    ViewData["Title"] = "Create Lit";
+}
+
 <form method="post" asp-action="Create" enctype="multipart/form-data">
     <!--AppUser-->
     <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" />

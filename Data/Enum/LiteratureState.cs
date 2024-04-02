@@ -2,8 +2,8 @@
 {
     public enum LiteratureState
     {
-        Finished,
+        New,
         Progressing,
-        New
+        Finished
     }
 }
