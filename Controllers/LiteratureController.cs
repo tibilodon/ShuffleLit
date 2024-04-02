@@ -170,6 +170,7 @@ namespace ShuffleLit.Controllers
         }
 
         //      DELETE
+        //  delete literature with collection
         public async Task<IActionResult> Delete(int id)
         {
             var literatureDetails = await _literatureRepository.GetByIdAsync(id);
@@ -185,16 +186,39 @@ namespace ShuffleLit.Controllers
         public async Task<IActionResult> DeleteLiterature(int id)
         {
             var literatureDetails = await _literatureRepository.GetByIdAsync(id);
+            var curUser = _userManager.GetUserId(User);
             if (literatureDetails == null)
             {
                 //  handle missing record error
                 return View("Error");
             }
-            _literatureRepository.Delete(literatureDetails);
-            _literatureCollectionRepository.DeleteLiteratureCollectionFromUser(literatureDetails.AppUserId, literatureDetails.Id);
+            if (literatureDetails.AppUserId == curUser)
+            {
+
+                //  author of the record, no need to handle join table deletes
+                _literatureRepository.Delete(literatureDetails);
+            }
             return RedirectToAction("Dashboard");
         }
 
+        //  delete (only) literature collection - !author
+        [HttpPost]
+        public async Task<IActionResult> DeleteFromCollection(int id)
+        {
+            var curUser = _userManager.GetUserId(User);
+
+            var literatureDetails = await _literatureRepository.GetByIdAsync(id);
+            if (literatureDetails == null)
+            {
+                //  handle missing record error
+                return View("Error");
+            }
+            //  async
+            await _literatureCollectionRepository.DeleteLiteratureCollectionFromUser(curUser, id);
+            return RedirectToAction("Index");
+        }
+
+        //  add literature to collection
         [HttpPost]
         public async Task<IActionResult> AddToCollection(int id)
         {
@@ -211,7 +235,7 @@ namespace ShuffleLit.Controllers
                 //  save it to collection - AddLiteratureToUser
                 _literatureCollectionRepository.AddLiteratureToUser(user.Id, literature.Id);
                 //  redirect the user back to index page
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("Index");
             }
             //  handle error
             return View("Error");

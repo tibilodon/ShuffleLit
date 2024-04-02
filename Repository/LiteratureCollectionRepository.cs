@@ -43,9 +43,15 @@ namespace ShuffleLit.Repository
         {
             var literatureCollection = await _context.LiteratureCollections.FirstOrDefaultAsync(lc => lc.AppUserId == appUserId && lc.LiteratureId == literatureId);
 
-            _context.LiteratureCollections.Remove(literatureCollection);
+            if (literatureCollection != null)
+            {
+                _context.LiteratureCollections.Remove(literatureCollection);
+                Save();
+                return literatureCollection;
+
+            }
             return literatureCollection;
-            //return Save();
+
 
         }
 

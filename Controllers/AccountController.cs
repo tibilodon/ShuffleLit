@@ -111,7 +111,7 @@ namespace ShuffleLit.Controllers
                     //  on success
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Literature");
                     }
                     // TODO: does not run - lock out users after n tries
                     if (result.IsLockedOut)

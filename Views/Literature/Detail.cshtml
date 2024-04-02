@@ -11,13 +11,13 @@
             <strong class="d-inline-block mb-2 text-primary">@Model.LiteratureCategory</strong>
             <h3 class="mb-0">@Model.Title</h3>
             <!--state for authenticated, in collection, NOT author-->
-            @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User)!=Model.AppUserId && Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
+            @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User) != Model.AppUserId && Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
             {
 
                 <div class="mb-1 text-muted">@Model.LiteratureCollections.FirstOrDefault(lc => lc.AppUserId == UserManager.GetUserId(User) && lc.LiteratureId == Model.Id).LiteratureState</div>
             }
             <!--author's state indicator-->
-            @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User)==Model.AppUserId)
+            @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User) == Model.AppUserId)
             {
                 <div class="mb-1 text-muted">@Model.LiteratureState</div>
 
@@ -29,15 +29,29 @@
             <!--extract thumbnail feature-->
 
             <img alt="thumbnail" class="bd-placeholder-img" width="200" height="250" src="@ViewData["ImgUrl"]" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" />
-            @* <p>@ViewData</p> *@
-            @if (User.Identity.IsAuthenticated && !Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
+            <!--add to collection-->
+            @if (User.Identity.IsAuthenticated)
             {
-                <form method="post" class="nav-item" asp-controller="Literature"
-                      asp-action="AddToCollection">
-                    <input name="id" value="@Model.Id" hidden />
-                    <button type="submit" class="btn btn-sm btn-outline-secondary">Add To Own Collection</button>
-                </form>
+                @if (!Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
+
+                {
+                    <form method="post" class="nav-item" asp-controller="Literature"
+                          asp-action="AddToCollection">
+                        <input name="id" value="@Model.Id" hidden />
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">Add To Own Collection</button>
+                    </form>
+                }
+                else if(Model.AppUserId!=UserManager.GetUserId(User))
+                {
+                    <form method="post" class="nav-item" asp-controller="Literature"
+                          asp-action="DeleteFromCollection">
+                        <input name="id" value="@Model.Id" hidden />
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">Remove from Collection</button>
+                    </form>
+                }
+
             }
+
         </div>
     </div>
 </div>
