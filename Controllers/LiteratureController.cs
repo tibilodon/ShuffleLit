@@ -88,6 +88,13 @@ namespace ShuffleLit.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             Literature literature = await _literatureRepository.GetByIdAsync(id);
+            if (literature == null)
+            {
+                return View("Error");
+            }
+            // format incorrect url - handle exception
+            literature.LinkUrl = (literature.LinkUrl.StartsWith("https://")) ? literature.LinkUrl : string.Format("https://{0}", literature.LinkUrl);
+
             var placeholderIcon = _placeholderImg.PlaceholderImg(literature.LiteratureCategory);
             ViewData["ImgUrl"] = placeholderIcon;
             return View(literature);
@@ -129,6 +136,7 @@ namespace ShuffleLit.Controllers
             //  pass data to viewmodel
             var editLiteratureVM = new EditLiteratureViewModel
             {
+                Id = id,
                 Title = literature.Title,
                 Description = literature.Description,
                 LinkUrl = literature.LinkUrl,
@@ -173,6 +181,7 @@ namespace ShuffleLit.Controllers
         //  delete literature with collection
         public async Task<IActionResult> Delete(int id)
         {
+
             var literatureDetails = await _literatureRepository.GetByIdAsync(id);
             //  record does not exist
             if (literatureDetails == null)

@@ -6,7 +6,7 @@ namespace ShuffleLit.ViewModels
     public class EditLiteratureViewModel
     {
         //  id field must be present, but ought to be optional(nullable)
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

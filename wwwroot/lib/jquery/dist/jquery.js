@@ -4038,7 +4038,10 @@ jQuery.extend( {
 } );
 
 
-// These usually indicate a programmer mistake during development,
+// These usually indicate a programmer mistake during 
+
+
+,
 // warn about them ASAP rather than swallowing them by default.
 var rerrorNames = /^(Eval|Internal|Range|Reference|Syntax|Type|URI)Error$/;
 

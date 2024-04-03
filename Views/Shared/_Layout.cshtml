@@ -25,7 +25,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item ">
 
-                        <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" && ViewContext.RouteData.Values["Action"].ToString()=="Index"?"active":"")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" ?"active":"")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <!--authenticated-->
                     @if (SignInManager.IsSignedIn(User))

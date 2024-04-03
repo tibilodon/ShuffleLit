@@ -43,4 +43,6 @@
         <span asp-validation-for="LiteratureState" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+
 </form>
+<a asp-controller="Literature" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
