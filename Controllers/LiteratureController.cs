@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ShuffleLit.Data.Enum;
 using ShuffleLit.Interfaces;
 using ShuffleLit.Models;
 using ShuffleLit.ViewModels;
@@ -53,9 +54,8 @@ namespace ShuffleLit.Controllers
                     LinkUrl = createLiteratureVM.LinkUrl,
                     LiteratureCategory = createLiteratureVM.LiteratureCategory,
                     LiteratureState = createLiteratureVM.LiteratureState
-
-
                 };
+
                 _literatureRepository.Add(literature);
                 //  add record to collection
                 var literatureCollection = new LiteratureCollection
@@ -250,6 +250,31 @@ namespace ShuffleLit.Controllers
             return View("Error");
 
         }
+
+        //  update collection state
+        [HttpPost]
+        public async Task<IActionResult> UpdateLiteratureCollectionState(int litId, LiteratureState state)
+        {
+            //  get  current user
+            var curUser = await _userManager.GetUserAsync(User);
+            //  get litCollection
+            var literatureCollection = await _literatureCollectionRepository.FindAppUserCollectionById(curUser.Id, litId);
+            //  handle error
+            if (literatureCollection == null)
+            {
+                return View("Error");
+            }
+            //  update object state
+            literatureCollection.LiteratureState = state;
+            //  update record
+            _literatureCollectionRepository.Update(literatureCollection);
+            //  return view
+            return RedirectToAction("Collection", "Literature");
+
+        }
+
+
+
 
     }
 }

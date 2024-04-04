@@ -10,11 +10,8 @@ namespace ShuffleLit.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        //public DbSet<Literature> Literatures { get; set; }
         public DbSet<Literature> Literatures { get; set; }
-        //public  DbSet<LiteratureOwner> LiteratureOwners { get; set; }
         public DbSet<LiteratureCollection> LiteratureCollections { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(p => new { p.LoginProvider, p.ProviderKey });

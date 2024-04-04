@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using ShuffleLit.Data.Enum
 @using ShuffleLit.Services
 @model Literature
 @inject SignInManager<AppUser> SignInManager
@@ -11,26 +12,12 @@
 
 <div class="h-100 container col-xl-10 col-xxl-8 mt-4">
     <div class="row align-items-center g-lg-5 py-4 h-100">
-
         <div class="card flex-md-row mb-4 box-shadow h-md-250 p-3">
             <div class="card-body d-flex flex-column align-items-start">
                 <h2>
-
-                <strong class="d-inline-block mb-2 text-primary">@Model.LiteratureCategory</strong>
+                    <strong class="d-inline-block mb-2 text-primary">@Model.LiteratureCategory</strong>
                 </h2>
                 <h3 class="mb-0">@Model.Title</h3>
-                @*     <!--state for authenticated, in collection, NOT author-->
-                @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User) != Model.AppUserId && Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
-                {
-
-                <div class="mb-1 text-muted">@Model.LiteratureCollections.FirstOrDefault(lc => lc.AppUserId == UserManager.GetUserId(User) && lc.LiteratureId == Model.Id).LiteratureState</div>
-                }
-                <!--author's state indicator-->
-                @if (User.Identity.IsAuthenticated && UserManager.GetUserId(User) == Model.AppUserId)
-                {
-                <div class="mb-1 text-muted">@Model.LiteratureState</div>
-
-                } *@
                 <div class="mt-1 mb-1 text-muted">ADD STATE</div>
                 <!--description-->
                 <h5 class="mt-3">Description</h5>
@@ -46,6 +33,7 @@
                 <!--add to collection-->
                 @if (User.Identity.IsAuthenticated)
                 {
+
                     @if (!Model.LiteratureCollections.Any(lc => lc.AppUserId == UserManager.GetUserId(User)))
 
                     {
@@ -57,15 +45,23 @@
                     }
                     else if (Model.AppUserId != UserManager.GetUserId(User))
                     {
+                        <!--update collection state-->
+                        <form method="post" class="d-flex p-2" asp-controller="Literature"
+                              asp-action="UpdateLiteratureCollectionState">
+                            <input name="litId" value="@Model.Id" hidden />
+                            <label asp-for="LiteratureState">LiteratureState:</label>&nbsp;
+                            <select name="state" asp-for="LiteratureState" asp-items="@Html.GetEnumSelectList<LiteratureState>()">
+                            </select>
+                            <button type="submit" class="mx-3 btn btn-sm btn-outline-danger">Update State</button>
+                        </form>
+                        <!--handle delete-->
                         <form method="post" class="nav-item" asp-controller="Literature"
                               asp-action="DeleteFromCollection">
                             <input name="id" value="@Model.Id" hidden />
                             <button type="submit" class="btn btn-sm btn-outline-danger">Remove from Collection</button>
                         </form>
                     }
-
                 }
-
             </div>
         </div>
     </div>

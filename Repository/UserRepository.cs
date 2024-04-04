@@ -13,20 +13,6 @@ namespace ShuffleLit.Repository
         {
             _context = context;
         }
-        public bool Add(AppUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AppUserExists(string AppUserId)
-        {
-            return _context.Users.Any(u => u.Id == AppUserId);
-        }
-
-        //public bool Delete(AppUser user)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public async Task<IEnumerable<AppUser>> GetAllUsers()
         {

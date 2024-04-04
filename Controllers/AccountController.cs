@@ -196,8 +196,6 @@ namespace ShuffleLit.Controllers
                     return View();
                 }
                 //  otherwise, update PW
-                //resetPasswordVM.PasswordChangedDate = DateTime.Now;
-
                 var result = await _userManager.ResetPasswordAsync(user, resetPasswordVM.Code, resetPasswordVM.Password);
                 //  on success
                 if (result.Succeeded)

@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShuffleLit.Interfaces;
-using ShuffleLit.Models;
 using ShuffleLit.ViewModels;
 
 namespace ShuffleLit.Controllers
@@ -9,12 +7,10 @@ namespace ShuffleLit.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
-        private readonly UserManager<AppUser> _userManager;
 
-        public UserController(IUserRepository userRepository, UserManager<AppUser> userManager)
+        public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _userManager = userManager;
         }
 
         //  get all users
@@ -50,8 +46,6 @@ namespace ShuffleLit.Controllers
                 Id = user.Id,
                 UserName = user.UserName,
                 PasswordChangedDate = user.PasswordChangedDate
-
-
             };
             return View(userDetailVM);
         }

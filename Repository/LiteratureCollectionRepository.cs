@@ -34,11 +34,6 @@ namespace ShuffleLit.Repository
             return Save();
         }
 
-        public bool Delete(LiteratureCollection literatureCollection)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<LiteratureCollection> DeleteLiteratureCollectionFromUser(string appUserId, int literatureId)
         {
             var literatureCollection = await _context.LiteratureCollections.FirstOrDefaultAsync(lc => lc.AppUserId == appUserId && lc.LiteratureId == literatureId);
@@ -61,16 +56,11 @@ namespace ShuffleLit.Repository
 
         }
 
-        public Task<IEnumerable<LiteratureCollection>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<List<Literature>> GetLiteratureCollectionForUser()
         {
+            //  get logged in user
             var curUser = _httpContextAccessor.HttpContext.User.GetUserId();
-            //var literatureCollections = _context.LiteratureCollections.Include(lc => lc.Literature).Where(c => c.AppUserId == curUser).ToList();
-            //return literatureCollections;
+            //  find and return all literatures with collections
             var literatures = _context.Literatures.Include(l => l.LiteratureCollections).Where(l => l.AppUserId != curUser && l.LiteratureCollections.Any(lc => lc.AppUserId == curUser)).ToList();
             return literatures;
         }
